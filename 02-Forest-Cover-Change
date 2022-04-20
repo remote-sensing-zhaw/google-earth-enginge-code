@@ -1,5 +1,17 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3");
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
+    geometry = 
+    /* color: #0b4a8b */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[7.88075185110356, 46.29638483613393],
+          [7.88075185110356, 46.27479435200558],
+          [7.914397480986373, 46.27479435200558],
+          [7.914397480986373, 46.29638483613393]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
