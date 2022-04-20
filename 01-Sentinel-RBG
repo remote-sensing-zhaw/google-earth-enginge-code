@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var sentinel = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+var sentinel = ee.ImageCollection("COPERNICUS/S2_SR");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
-
-print(sentinel)
+var filtered = sentinel.filterDate('2018-05-01', '2018-10-15');
+var imageVisParam = {"bands":["B4","B2","B2"],"min":224.36,"max":10945.64,"gamma":4};
+Map.addLayer(filtered, imageVisParam);
