@@ -17,3 +17,11 @@ var srtm = ee.Image("USGS/SRTMGL1_003"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
+
+var data_filtered = gfcc.filter(ee.Filter.date('2015-01-01', '2015-12-31'))
+
+
+var treeCanopyCoverVis = {"min":0,"max":100,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]};
+Map.addLayer(data_filtered.min(), treeCanopyCoverVis, 'Tree Canopy Cover');
+
+console.log(gfcc)
