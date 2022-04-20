@@ -1,19 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var srtm = ee.Image("USGS/SRTMGL1_003"),
-    forest = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
-    visp = 
-    /* color: #bebebe */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[7.881694123350189, 46.295042327044484],
-          [7.881694123350189, 46.275112462990116],
-          [7.914910599790619, 46.275112462990116],
-          [7.914910599790619, 46.295042327044484]]], null, false),
-    gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3");
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
