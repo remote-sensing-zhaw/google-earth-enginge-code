@@ -1,0 +1,16 @@
+//////////////// Constants ////////////////
+var RGB_VIS = {min: 0, max: 0.3, gamma: 1.5, bands: ['B4', 'B3', 'B2']};
+
+//////////////// Analysis ////////////////
+var filtered = L8.filterDate('2016-05-01', '2016-05-15')
+    .filterBounds(geometry);
+var image = ee.Image(filtered.first());
+
+// var nir = image.select('B5');
+// var red = image.select('B4');
+// var ndvi = (nir.subtract(red).divide(nir.add(red)));
+var ndvi = image.normalizedDifference(['B5', 'B4']);
+
+//////////////// User Interface ////////////////
+Map.addLayer(image, RGB_VIS, 'RGB');
+Map.addLayer(ndvi, {min:0, max:1}, 'NDVI');
