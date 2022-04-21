@@ -15,8 +15,10 @@ var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
-var treeCanopyCover = gfcc.select('tree_canopy_cover').filter(ee.Filter.date('2015-01-01', '2015-12-31'));
+var treeCanopyCover = gfcc.select('tree_canopy_cover').filterDate('2000-01-01', '2020-12-31').filterBounds(geometry);
 
+
+print(treeCanopyCover)
 
 Map.addLayer(
   treeCanopyCover.min(), 
