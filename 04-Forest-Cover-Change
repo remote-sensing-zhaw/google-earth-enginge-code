@@ -2,17 +2,17 @@
 var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
     hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
     geometry = 
-    /* color: #00ffff */
+    /* color: #bf04c2 */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[7.896061465331834, 46.293863146586986],
-          [7.896061465331834, 46.28555973893694],
-          [7.90915064532451, 46.28555973893694],
-          [7.90915064532451, 46.293863146586986]]], null, false);
+        [[[7.632432505676072, 46.341346297167924],
+          [7.632432505676072, 46.31597965252618],
+          [7.663674876281541, 46.31597965252618],
+          [7.663674876281541, 46.341346297167924]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
