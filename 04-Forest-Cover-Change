@@ -3,6 +3,7 @@ var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
     hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
     geometry = 
     /* color: #bf04c2 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -19,13 +20,14 @@ var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
 var treeCanopyCover = gfcc.select('tree_canopy_cover').filterDate('2000-01-01', '2020-12-31').filterBounds(geometry);
 
 
-print(hansen)
+
 
 Map.addLayer(
-  treeCanopyCover.min(), 
+  treeCanopyCover.max(), 
   {"min":0,"max":100,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]}
   );
   
 Map.addLayer(hansen.select("lossyear"))
+
 
 print(ui.Chart.image.series(treeCanopyCover.select('tree_canopy_cover'), geometry));
