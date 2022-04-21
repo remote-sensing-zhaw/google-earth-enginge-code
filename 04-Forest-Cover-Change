@@ -20,11 +20,15 @@ var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
 var treeCanopyCover = gfcc.select('tree_canopy_cover').filterDate('2000-01-01', '2020-12-31').filterBounds(geometry);
 
 
+var treeCanopy2011 = ee.Image(treeCanopyCover.first())
+var treeCanopy2015 = ee.Image(treeCanopyCover.first())
 
+print(treeCanopy2011)
 
 Map.addLayer(
-  treeCanopyCover.max(), 
-  {"min":0,"max":100,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]}
+  treeCanopy2011, 
+  {"min":0,"max":100,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]},
+  "treeCover 2011"
   );
   
 Map.addLayer(hansen.select("lossyear"))
