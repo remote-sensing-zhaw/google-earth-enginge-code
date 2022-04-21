@@ -22,7 +22,7 @@ function addNDVI(image) {
 }
 
 //////////////// Analysis ////////////////
-var filtered = sentinel.filterDate('2020-01-01', '2020-12-31');
+var filtered = sentinel.filterDate('2020-01-01', '2020-12-31').filterBounds(geometry);
 var with_ndvi = filtered.map(addNDVI);
 
 //////////////// User Interface ////////////////
