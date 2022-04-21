@@ -19,19 +19,28 @@ var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
 
 var treeCanopyCover = gfcc.select('tree_canopy_cover').filterDate('2000-01-01', '2020-12-31').filterBounds(geometry);
 
+print(treeCanopyCover)
 
-var treeCanopy2011 = ee.Image(treeCanopyCover.first())
-var treeCanopy2015 = ee.Image(treeCanopyCover.first())
+var treeCanopy2011 = ee.Image(treeCanopyCover.filterDate('2000-01-01', '2000-01-02').min());
+var treeCanopy2015 = ee.Image(treeCanopyCover.filterDate('2015-01-01', '2015-01-02').min());
 
-print(treeCanopy2011)
+print(treeCanopy2011);
+
+Map.addLayer(hansen.select("lossyear"), {}, "Year of Loss");
 
 Map.addLayer(
   treeCanopy2011, 
-  {"min":0,"max":100,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]},
+  {"min":0,"max":255,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]},
   "treeCover 2011"
   );
-  
-Map.addLayer(hansen.select("lossyear"))
+
+Map.addLayer(
+  treeCanopy2015, 
+  {"min":0,"max":255,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]},
+  "treeCover 2015"
+  );
+
+
 
 
 print(ui.Chart.image.series(treeCanopyCover.select('tree_canopy_cover'), geometry));
