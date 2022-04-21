@@ -1,13 +1,34 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var sentinel = ee.ImageCollection("COPERNICUS/S2_SR");
+var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
+    geometry = /* color: #0b4a8b */ee.Geometry.Point([7.881945768580243, 46.294241888428566]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-var filtered = sentinel.filterDate('2018-05-01', '2018-10-15')
+
+
+
+var filtered = sentinel.filterDate('2018-05-15', '2018-05-30').filterBounds(geometry);
+
+
 var image = ee.Image(filtered.first());
 
+print(image)
 
-var ndvi = image.normalizedDifference(['B8', 'B4']);
+var nir = image.select('B5');
+var red = image.select('B4');
+var ndvi = (nir.subtract(red).divide(nir.add(red)));
 
-print(ndvi)
 
 //////////////// User Interface ////////////////
-Map.addLayer(ndvi, {min:-1, max:1}, 'NDVI');
+
+Map.addLayer(ndvi, {min:-1, max:1, palette:"d73027,f46d43,fdae61,fee08b,ffffbf,d9ef8b,a6d96a,66bd63,1a9850"}, 'NDVI');
+//////////////// User Interface ////////////////
+
+
+
+//////////////// Constants ////////////////
+
+
+
+
+
+
+
