@@ -1,7 +1,9 @@
-//////////////// Constants ////////////////
-var RGB_VIS = {min: 0, max: 3000, gamma: 1.5, bands: ['B4', 'B3', 'B2']};
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var geometry = /* color: #0b4a8b */ee.Geometry.Point([7.881945768580243, 46.294241888428566]),
+    sentinel = ee.ImageCollection("COPERNICUS/S2_SR");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 
-//////////////// Functions ////////////////
+
 function addNDVI(image) {
   var ndvi = image.normalizedDifference(['B5', 'B4']); // Landsat 8
   return image.addBands(ndvi.rename('ndvi'));
