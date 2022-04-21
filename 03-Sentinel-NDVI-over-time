@@ -2,6 +2,7 @@
 var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
     geometry = 
     /* color: #ffc82d */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
