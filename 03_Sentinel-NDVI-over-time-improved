@@ -1,3 +1,19 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
+    geometry = 
+    /* color: #ffc82d */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[7.878851780242231, 46.298449515326446],
+          [7.878851780242231, 46.27496144520905],
+          [7.921595463103559, 46.27496144520905],
+          [7.921595463103559, 46.298449515326446]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
 function addNDVI(image) {
@@ -5,8 +21,12 @@ function addNDVI(image) {
   return image.addBands(ndvi.rename('ndvi'));
 }
 
-//////////////// Analysis ////////////////
 var filtered = sentinel.filterDate('2020-01-01', '2020-12-31').filterBounds(geometry);
+
+
+var filtered = filtered.filter(ee.Filter.eq('CLOUD_COVER', 20));
+
+
 var with_ndvi = filtered.map(addNDVI);
 
 //////////////// User Interface ////////////////
