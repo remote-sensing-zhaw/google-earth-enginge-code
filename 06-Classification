@@ -31,7 +31,7 @@ var trainingdata = filtered.sampleRegions({
   collection: traning, 
   classProperty: "type", 
   inputProperties: ["B2","B3","B4"],
-  scale: 30;
+  scale: 30
 });
 
 var classifier = ee.Classifier.smileCart()
