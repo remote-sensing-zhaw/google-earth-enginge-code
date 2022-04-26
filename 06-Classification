@@ -37,7 +37,7 @@ var trainingdata = filtered.sampleRegions({
 var classifier = ee.Classifier.smileCart()
 
 
-Map.addLayer(filtered, {"bands":["B4","B3","B2"]});
+Map.addLayer(filtered, imageVisParam);
 Map.addLayer(forest, {color: "darkgreen"}, "Forest");
 Map.addLayer(water, {color: "blue"}, "Water");
 Map.addLayer(agriculture, {color: "green"}, "Agriculture");
