@@ -1,13 +1,43 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var training = ee.FeatureCollection("users/rata/training_data"),
-    sentinel = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+    sentinel = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED"),
+    geometry = 
+    /* color: #0b4a8b */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[7.803019510237705, 47.65648523707026],
+          [7.803019510237705, 46.89058389088311],
+          [9.541605936018955, 46.89058389088311],
+          [9.541605936018955, 47.65648523707026]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
+
+
+var filtered = sentinel
+  .filterDate('2020-01-01', '2020-12-31')
+  .filterBounds(geometry)
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20));
 
 var forest = training.filter(ee.Filter.eq("type",1));
 var water = training.filter(ee.Filter.eq("type",2));
 var agriculture = training.filter(ee.Filter.eq("type",2));
 
+
+var trainingdata = filtered.sampleRegions({
+  collection: traning, 
+  classProperty: "type", 
+  inputProperties: ["B2","B3","B4"],
+  scale: 30;
+});
+
+var classifier = ee.Classifier.smileCart()
+
+
+Map.addLayer(filtered, {"bands":["B4","B3","B2"]});
 Map.addLayer(forest, {color: "darkgreen"}, "Forest");
 Map.addLayer(water, {color: "blue"}, "Water");
 Map.addLayer(agriculture, {color: "green"}, "Agriculture");
