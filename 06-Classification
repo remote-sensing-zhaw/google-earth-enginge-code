@@ -1,0 +1,14 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var training = ee.FeatureCollection("users/rata/training_data"),
+    sentinel = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+
+var forest = training.filter(ee.Filter.eq("type",1));
+var water = training.filter(ee.Filter.eq("type",2));
+var agriculture = training.filter(ee.Filter.eq("type",2));
+
+Map.addLayer(forest, {color: "darkgreen"}, "Forest");
+Map.addLayer(water, {color: "blue"}, "Water");
+Map.addLayer(agriculture, {color: "green"}, "Agriculture");
+
