@@ -21,7 +21,9 @@ function addNDVI(image) {
   return image.addBands(ndvi.rename('ndvi'));
 }
 
-var filtered = sentinel.filterDate('2020-01-01', '2020-12-31').filterBounds(geometry);
+var filtered = sentinel
+  .filterDate('2020-01-01', '2020-12-31')
+  .filterBounds(geometry);
 
 
 var filtered = filtered.filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20));
