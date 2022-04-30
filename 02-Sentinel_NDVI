@@ -1,25 +1,22 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
-    geometry = /* color: #0b4a8b */ee.Geometry.Point([7.881945768580243, 46.294241888428566]);
+    aoi = /* color: #0b4a8b */ee.Geometry.Point([7.881945768580243, 46.294241888428566]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
 
-var filtered = sentinel.filterDate('2018-05-12', '2018-05-15').filterBounds(geometry).first();
-
-print(filtered)
+var sentinel_filtered = sentinel.filterDate("2018-05-12","2018-05-15").filterBounds(aoi).first();
 
 
-
-var nir = image.select('B8');
-var red = image.select('B4');
-var ndvi = (nir.subtract(red).divide(nir.add(red)));
-
-
-Map.addLayer(ndvi, {min:-1, max:1, palette:"d73027,f46d43,fdae61,fee08b,ffffbf,d9ef8b,a6d96a,66bd63,1a9850"}, 'NDVI');
+var nir = sentinel_filtered.select("B8")
+var red = sentinel_filtered.select("B4")
+var zaehler = nir.subtract(red);
+var nenner = nir.add(red);
+var ndvi = zaehler.divide(nenner);
 
 
 
+console.log(nir);
 
 
-
+Map.addLayer(ndvi, {min: -1, max: 1, palette: "d73027,f46d43,fdae61,fee08b,d9ef8b,a6d96a,66bd63,1a9850"});
