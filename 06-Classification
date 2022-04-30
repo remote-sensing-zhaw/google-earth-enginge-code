@@ -31,20 +31,28 @@ var agriculture = training.filter(ee.Filter.eq("type",2));
 
 var filtered2 = ee.Image(filtered)
 
-var training2 = filtered2.select(["B4","B3","B2"]).sampleRegions({
+
+var bands = ["B1","B2","B3","B4","B5","B6","B7","B8"]
+var training2 = filtered.select(bands).sampleRegions({
   collection: training,
-  properties: "type",
+  properties: ["type"],
   scale: 30
 });
 
 
 
-var classifier = ee.Classifier.smileCart()
+var classifier = ee.Classifier.smileCart().train({features: training2, classProperty: "type"});
 
-print(filtered);
 
+
+var classified = filtered.select(bands).classify(classifier);
+print(classified);
+
+/*
 Map.addLayer(filtered, {"bands":["B4","B3","B2"]});
 Map.addLayer(forest, {color: "darkgreen"}, "Forest");
 Map.addLayer(water, {color: "blue"}, "Water");
 Map.addLayer(agriculture, {color: "green"}, "Agriculture");
+*/
+Map.addLayer(classified, {min: 1, max: 3, palette: "darkgreen, blue, green"}, "Classified");
 
