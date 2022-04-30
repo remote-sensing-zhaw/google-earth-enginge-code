@@ -5,10 +5,9 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
 
 
 
-var filtered = sentinel.filterDate('2018-05-15', '2018-05-30').filterBounds(geometry);
+var filtered = sentinel.filterDate('2018-05-12', '2018-05-15').filterBounds(geometry).first();
 
 print(filtered)
-var image = ee.Image(filtered.first());
 
 
 
