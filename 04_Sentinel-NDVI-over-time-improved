@@ -17,8 +17,8 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2_SR"),
 
 
 function addNDVI(image) {
-  var ndvi = image.normalizedDifference(['B8', 'B4']); 
-  return image.addBands(ndvi.rename('ndvi'));
+  var ndvi = image.normalizedDifference(['B8', 'B4']).rename("ndvi"); 
+  return image.addBands(ndvi);
 }
 
 var filtered = sentinel
