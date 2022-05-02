@@ -1,0 +1,5 @@
+var srtm = ee.Image("USGS/SRTMGL1_003")
+
+print(srtm)
+
+Map.addLayer(srtm, {min:0, max: 4000, palette: "green, red, blue"})
