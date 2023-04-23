@@ -1,7 +1,25 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+
+
+// look for Sentinel-2 MSI: MultiSpectral Instrument, Level-2A
+
 var sentinel = ee.ImageCollection("COPERNICUS/S2_SR");
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+// try printing, will abort (>5000 elements)
+
+// turn import statement into a formatted import statment and check docs.
+// there is an example of filtering by date, use this example and adapt to the
+// date range below
 
 var filtered = sentinel.filterDate('2018-05-12', '2018-05-15');
-var imageVisParam = {"bands":["B4","B3","B2"]}; // adapt these parameters: "min":224.36,"max":10945.64,"gamma":4
-Map.addLayer(filtered, imageVisParam);
+
+
+// try adding to the map
+Map.addLayer(filtered);
+
+// not looking good. Check docs again, use band information to make an rgb image
+
+Map.addLayer(filtered, {"bands":["B4","B3","B2"]});
+
+// still not looking good. Using the map UI, use the layer setting to strech 
+// the image to 98% and raise the gamma to about 4. 
+// These settings can now be imported into the script via the import button

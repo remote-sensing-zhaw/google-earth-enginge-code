@@ -1,37 +1,54 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3"),
-    hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8"),
-    geometry = 
-    /* color: #bf04c2 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
+
+// we want to see how the forest fire in leuk in the year 2003 affected
+// tree canopy cover
+
+
+// get dataset "Global Forest Cover Change (GFCC) Tree Cover Multi-Year Global 30m" 
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3")
+
+// get dataset "Hansen Global Forest Change v1.9 (2000-2021)"
+var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8")
+
+// visualize the forst fire loss year
+var lossyear = hansen.select("lossyear")
+Map.addLayer(lossyear, {}, "Year of Loss");
+
+// reclassify to 2004 to 1 (all other to nodata) to see the fire in 2004
+// albeit the fire was in 2003, the loss year is recorded 2004
+var loss2004 = hansen.select("lossyear").remap([4], [1])
+Map.addLayer(loss2004, {}, "Loss 2004");
+
+// draw a square originating from Leuk north to Albinen and east to about Guttet Feschel. 
+// Use the map above or the coordinates below for reference
+
+geometry = 
     ee.Geometry.Polygon(
         [[[7.632432505676072, 46.341346297167924],
           [7.632432505676072, 46.31597965252618],
           [7.663674876281541, 46.31597965252618],
           [7.663674876281541, 46.341346297167924]]], null, false);
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
+// select tree canopy cover and filter by date and bounds
 var treeCanopyCover = gfcc.select('tree_canopy_cover').filterDate('2000-01-01', '2020-12-31').filterBounds(geometry);
 
+// have a look at the results
 print(treeCanopyCover)
 
-var treeCanopy2011 = ee.Image(treeCanopyCover.filterDate('2000-01-01', '2000-01-02').min());
+// check out the values for 2000 and 2015
+var treeCanopy2000 = ee.Image(treeCanopyCover.filterDate('2000-01-01', '2000-01-02').min());
 var treeCanopy2015 = ee.Image(treeCanopyCover.filterDate('2015-01-01', '2015-01-02').min());
 
-print(treeCanopy2011);
+print(treeCanopy2000);
 
-Map.addLayer(hansen.select("lossyear"), {}, "Year of Loss");
 
+// if you havent explained before, explain the use of colorbrewer and my tool
+// https://colorbrewer2.org
+// https://remote-sensing-zhaw.github.io/colorbrewer2gee/
 Map.addLayer(
-  treeCanopy2011, 
+  treeCanopy2000, 
   {"min":0,"max":255,"palette":["ffffff","afce56","5f9c00","0e6a00","003800"]},
-  "treeCover 2011"
+  "treeCover 2001"
   );
 
 Map.addLayer(

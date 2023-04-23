@@ -1,5 +1,6 @@
 
 // this is code is used to import the data
+// dont import via the import button, but via the copy code snipeet button
 var srtm = ee.Image("USGS/SRTMGL1_003")
 
 // to get metadata of the data (similar to R str() function)

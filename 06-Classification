@@ -1,3 +1,5 @@
+// this script is not ready for teaching
+
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var training_points = ee.FeatureCollection("users/rata/training_data"),
     sentinel = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED"),
