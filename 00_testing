@@ -1,0 +1,5 @@
+
+
+var myname = "Nils Ratnaweera"
+
+console.log(myname)
