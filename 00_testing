@@ -1,0 +1,8 @@
+
+
+var myname = "Nils Ratnaweera";
+
+var myage = 2023-1987;
+
+console.log(myage);
+console.log(myname);
