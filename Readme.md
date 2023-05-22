@@ -5,7 +5,7 @@
 - Stance Maples has an awesome introduction to GEE on [youtube](https://youtu.be/oAElakLgCdA).
 - Didactics: 
   - When walking through the code, try to involve the students in the thought processes that it might take to come up with the correct solution.
-  - The classification example is outdated, especially since the training data needs to be uploaded. There is usually not enough time to do this anyway.
+  - The classification example is ~~outdated, especially since the training data needs to be uploaded. There is usually not enough time to do this anyway.~~ a standalone script that I presented in different lecture
 
 ## Git Stuff
 
