@@ -1,0 +1,146 @@
+
+# Demo 3: Multispec NDVI
+
+*Calculating NDVI for a single image*
+
+- In this exercise, we will do some quantitative analysis on the data, rather than "just" visualizing it qualitatively.
+- We will calculate the [Normalized Difference Vegetation Index](https://de.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index) (NDVI)
+- You have already seen this in the first lecture on the [Sentinel Hub EO-Browser](https://apps.sentinel-hub.com/eo-browser/)
+- There, you weren't able to do any calculations based on the data
+
+
+## Setup
+
+- We will work with the same data from Demo 2
+- We can overwrite `s2` so we do not have too many variables
+
+```js
+var imageVisParam = {"opacity":1,"bands":["B4","B3","B2"],"min":85.84,"max":4206.16,"gamma":3.055}
+
+var s2 = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+
+s2 = s2.filterDate("2023-10-01", "2023-10-03");
+
+Map.addLayer(s2, imageVisParam);
+```
+
+## Specify an area of interest (`aoi`)
+
+- As we saw in the last demo, we have several images in the collection.
+- However, we are interested only in a single image, maybe an aggregate
+- To select a single image, we need to filter by location.
+- To do this, use the map UI and create a point in Visp, name it "aoi"
+  - Note how the points are immediately added in the code editor
+  - If a mistake was made, either delete and redraw, or copy the code, delete the import statement and add it manually
+
+```js
+// this was created automagically
+aoi = ee.Geometry.Point([7.880419288840592, 46.29770703906289]);
+
+// and can be added to the Map like so:
+Map.addLayer(aoi);
+```
+
+## Filter by the `aoi`
+
+- using the search function in Docs, look for various filter functions
+- We will need the function `filerBounds()`
+- Apply the filter, but out of intereste check the size of the collection before and after filtering
+
+```js
+// the original filter coincidently shows just one image 
+// for the filtered Date and AOI. Try changing the dates 
+// so that multiple images 
+
+//var s2 = s2.filterDate("2023-10-01", "2023-10-03");
+var s2 = s2.filterDate("2023-09-01", "2023-10-03");
+
+
+console.log(s2.size())
+
+s2 = s2.filterBounds(aoi);
+
+console.log(s2.size())
+console.log(s2);
+```
+
+## Inspect the output
+
+- Check the output of `console.log(s2)`. 
+- We wanted a single image, but still have an image collection with multiple values. 
+- We might want to choose *the best* image (we will do so later on)
+- but for now let's keep it simple and just take the first with the `first()` method
+
+```js
+s2 = s2.first()
+
+print(s2)
+```
+
+## Calculate NDVI
+
+- Now, we can use the image to calculate [NDVI](https://de.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index)
+
+
+$$ \text{NDVI} = \frac{\text{NIR}- \text{Red}}{\text{NIR}+\text{Red}} $$
+
+```js
+var nir = s2.select("B8")
+var red = s2.select("B4")
+var zaehler = nir.subtract(red);
+var nenner = nir.add(red);
+var ndvi = zaehler.divide(nenner);
+```
+
+## Visualize the output
+
+Add the output to the map:
+
+```js
+Map.addLayer(ndvi);
+```
+
+## Adjust range and palette
+
+- Via the GUI
+  - Adjust the value range to `-1` - `1`
+  - Add a palettte by adding the colors red, yellow and green. These will automatically be mapped to the specified value rage.
+- Import the visParams from the GUI to the code editor
+
+```js
+imageVisParam2 = {"opacity":1,"bands":["B8"],"min":-1,"palette":["ff0000","ffff00","008000"]};
+
+Map.addLayer(ndvi, imageVisParam2);
+
+```
+
+## Normalized Difference Function (skip this, doesn't work)
+
+- Alternatively, you can use the *Normalized Difference* function
+- The function "normalizedDifference" is a generic function to calculcate normalized difference between two bands
+- This doesn't seem to work?
+
+```js
+var ndvi = s2.normalizedDifference(["B8", "B4"]);
+```
+
+
+## Custom NDVI function
+
+- We could also create a custom `ndvi()`-function that takes the bands 8 and 4
+- We can only apply this function to the Sentinel-2 data, where the Band numbers 8 and 4 correspond to NIR and Red.
+
+```js
+function ndvi_fun(image){
+  var nir = image.select("B8");
+  var red = image.select("B4");
+  var zaehler = nir.subtract(red);
+  var nenner = nir.add(red);
+  var ndvi = zaehler.divide(nenner);
+  return ndvi
+}
+
+var ndvi = ndvi_fun(s2)
+
+Map.addLayer(ndvi, imageVisParam2);
+``` 

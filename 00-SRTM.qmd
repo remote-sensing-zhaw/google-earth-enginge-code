@@ -1,0 +1,79 @@
+
+
+# Demo 1: Unispectral Data
+
+**Exloring a digital elevation model (DEM) in GEE**
+
+- In this exercise we will explore a simple, single band dataset: A Digital Elevation Model (DEM)
+- First, use the search bar to look for a topographically interesting place, e.g. Visp, Switzerland.
+
+
+## Setting up
+
+- Use the same search bar to look for "Digital Elevation" data. We will use the SRTM data.
+- Explore the metadata of SRTM
+- Import via the *Collection Snippet*-button
+  - Save in a variable and add `;`
+  - Execute with <kbd>Ctrl</kbd> <kbd>Alt</kbd> + <kbd>Enter</kbd>
+
+
+```js
+var srtm = ee.Image("USGS/SRTMGL1_003");
+```
+
+## `console.log()` and `print()`
+
+- Nothing happens. 
+- To get metadata of the data (similar to R `str()` function):
+
+```js
+console.log(srtm);
+```
+
+- In the GEE environment, `print()` is the same as `console.log()` 
+- This is not the case outside GEE!
+
+```js
+print(srtm);
+```
+
+## Create a map
+
+Add the data to the map
+
+```js
+Map.addLayer(srtm)
+```
+
+- The result does not show much. Why?
+- The color scheme  "white to black" is streched across the *whole* range of values. 
+- Visp, however steep it is there, does not cover this whole range. 
+
+## Consult docs to change the viz params
+
+- Truncate using the GUI interface (e.g. from 0 to 4000). 
+- In the docs for `Map.addLayer()` see the reference:
+
+  > For Images and ImageCollection, see `ee.data.getMapId` for valid parameters
+
+ - Look for `ee.data.getMapId` in the docs and note the following reference:
+
+   > The visualization parameters as a (client-side) JavaScript object.
+   > ...
+   > - min (comma-separated numbers) Value (or one per band) to map onto 00.
+   > - max (comma-separated numbers) Value (or one per band) to map onto FF.
+
+
+
+```js
+visParam = {min: 0, max: 4000}
+Map.addLayer(srtm, visParam)
+```
+
+## Add a color palette
+
+Add a color palette, and maybe to the whole thing in one line:
+
+```js
+Map.addLayer(srtm, {min: 0, max: 4000, palette: ["green", "red", "blue"]})
+```

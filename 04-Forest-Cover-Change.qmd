@@ -1,0 +1,203 @@
+
+## Demo 5: Forest regrowth
+
+**How did the forst fire in leuk (2003) affect tree canopy cover**
+
+
+## Preperation
+
+- get dataset "*Hansen Global Forest Change v1.9 (2000-2021)*"
+- `print()` it to the console, explore the bands and properties
+
+```js
+var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8")
+
+print(hansen)
+```
+
+## Visualize the fire (lossyear)
+
+- visualize the forst fire loss year
+
+
+```js
+var lossyear = hansen.select("lossyear")
+Map.addLayer(lossyear, {}, "Year of Loss");
+```
+
+## Highlight the fire in 2003
+
+- albeit the fire was in 2003, the loss year is recorded 2004
+- reclassify to 2004 to 1 (all other to nodata) to see the fire in 2004
+
+```js
+var loss2004 = hansen.select("lossyear").remap([4], [1])
+Map.addLayer(loss2004, {}, "Loss 2004");
+```
+
+## Determin the area of interest
+
+- draw a square or a polygon around the forest fire in Leuk
+- rename it to aoi
+
+
+## Get Tree Canopy Cover over time
+
+- get dataset "*Global Forest Cover Change (GFCC) Tree Cover Multi-Year Global 30m*" 
+
+
+```js
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3")
+
+// printing fails
+print(gfcc)
+```
+
+## Select the band `tree_canopy_cover`
+
+```js
+// chaining!
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3")
+  .select("tree_canopy_cover")
+
+print(gfcc)
+```
+
+
+## Filter by `aoi`
+
+```js
+// chaining!
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3")
+  .select("tree_canopy_cover")
+  .filterBounds(aoi)
+
+print(gfcc.size())
+print(gfcc)
+```
+
+## Get the date of the first and last dataset
+
+- write this down from inside out
+
+```js
+var first_date = ee.Date(gfcc.first().get("system:time_start"))
+var last_date = ee.Date(gfcc.sort("system:time_start", false).first().get("system:time_start"))
+
+print("from", first_date, "to", last_date)
+
+```
+
+
+## Compare the values for 2000 and 2015
+
+
+- we can't use `.first()` with `sort()` here, because the very first image does not seem to really intersect with the AOI
+
+```js
+var treeCanopy2000 = ee.Image(treeCanopyCover.filterDate('2000-01-01', '2000-01-02').min());
+Map.addLayer(treeCanopy2000);
+```
+
+## Draw `aoi` outine
+
+- Look for fillcolor in the docs
+- notice that these can only be applied to `FeatureCollections`
+- read up on `ee.FeatureCollection`
+- notice that you can create a `FeatureCollection` from a `Geometry`
+- do this, and then style the `aoi_fc` using `fillColor: "00000000"`
+
+
+```js
+var aoi_fc = ee.FeatureCollection(aoi)
+Map.addLayer(aoi_fc, {fillColor: "00000000"}, "aoi");
+```
+
+
+## Work on Map 
+
+- Add color ramp (e.g. gray to green), transparency and strech the values 0 - 100
+- Maybe highlight <https://colorbrewer2.org>
+
+```js
+Map.addLayer(treeCanopy2000, imageVisParam, "2000");
+```
+
+## Repeat for 2015
+
+```js
+var treeCanopy2015 = ee.Image(treeCanopyCover.filterDate('2015-01-01', '2015-01-02').min());
+Map.addLayer(treeCanopy2015, imageVisParam, "2015");
+``` 
+
+
+## Create a chart
+
+- Comparing 2000 and 2015 already shows, that the tree canopy cover has not really increased
+- Lets determin the tree canopy cover over time by creating a chart
+
+```js
+print(ui.Chart.image.series(gfcc, aoi));
+```
+
+
+## Full Example
+
+
+```js
+
+var aoi = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[7.643917258942992, 46.31961919138104],
+          [7.644603904450804, 46.32199024646279],
+          [7.64769380923596, 46.324598288374254],
+          [7.65318697329846, 46.3260208042863],
+          [7.657306846345335, 46.3281545087973],
+          [7.65868013736096, 46.33171049803083],
+          [7.660740073884398, 46.33550329839251],
+          [7.664516624177367, 46.338347726044226],
+          [7.663829978669554, 46.341192005737106],
+          [7.659710105622679, 46.341192005737106],
+          [7.64769380923596, 46.33692553071325],
+          [7.64220064517346, 46.33123637949057],
+          [7.640827354157835, 46.32625788667534],
+          [7.635677512849242, 46.327206205956394],
+          [7.63396089907971, 46.32388701654679],
+          [7.638080772126585, 46.31985630151306]]]);
+
+
+var hansen = ee.Image("UMD/hansen/global_forest_change_2020_v1_8")
+
+var imageVisParam = {"opacity":0.5,"bands":["tree_canopy_cover"],"min":0,"max":100,"palette":['#f7fcf5','#e5f5e0','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#006d2c','#00441b']}
+
+var loss2004 = hansen.select("lossyear").remap([4], [1]);
+var gfcc = ee.ImageCollection("NASA/MEASURES/GFCC/TC/v3")
+  .filterBounds(aoi)
+  .select("tree_canopy_cover")
+
+var first_date = ee.Date(gfcc.first().get("system:time_start"))
+var last_date = ee.Date(gfcc.sort("system:time_start", false).first().get("system:time_start"))
+
+print("from", first_date, "to", last_date, "total", gfcc.size())
+
+
+var treeCanopy2000 = gfcc.filterDate('2000-01-01', '2000-01-02').mean()
+var treeCanopy2015 = gfcc.filterDate('2015-01-01', '2015-01-02').mean()
+
+
+print(treeCanopy2000)
+
+
+var aoi_fc = ee.FeatureCollection(aoi)
+
+Map.addLayer(treeCanopy2000, imageVisParam, "2000");
+Map.addLayer(treeCanopy2015, imageVisParam, "2015");
+
+print(ui.Chart.image.series(gfcc, aoi));
+
+
+Map.addLayer(aoi_fc.style({fillColor: "00000000"})); 
+
+```

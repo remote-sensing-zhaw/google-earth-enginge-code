@@ -1,0 +1,19 @@
+project: 
+  type: book
+
+# format:
+#   html:
+#     number-depth: 1
+
+book:
+  title: "Cloud Computing with Google Earth Engine"
+  chapters: 
+    - index.qmd
+    - 00-SRTM.qmd
+    - 01-Sentinel-RBG.qmd
+    - 02-Sentinel_NDVI.qmd
+    - 03-Sentinel-NDVI-over-time.qmd
+    - 04-Forest-Cover-Change.qmd
+    - 05-Classification-walkthrough.qmd
+    - 05-Classification-working-ex.qmd
+

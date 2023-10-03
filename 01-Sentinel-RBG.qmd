@@ -1,0 +1,76 @@
+
+## Demo 2: Multispectral Data
+
+*Exploring Multispectral Data*
+
+- In this exercise, we will explore a more complex, multispectral dataset.
+- This adds complexity since there are not only multiple bands, but there also is a temporal dimension and issues with cloud cover etc
+
+Lets get started!
+
+- Look for Sentinel-2 Data, browse the collections
+- Add the dataset * Harmonized Sentinel-2 MSI: MultiSpectral Instrument, Level-2A*
+
+```js
+var s2 = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+```
+
+- Even the first step shows us, that this is a more complex dataset. 
+- Printing the collection fails:
+
+```js
+print(s2);
+```
+
+- in the docs, look for ways to filter the dataset, e.g. by date
+- use the function `filterDate()` which can be found under `ee.ImageCollection`
+- Apply the filter:
+  - Play around with some recent dates (2 - 3 days) 
+  - Zoom out
+  - and add the result to the map. 
+  - This nicely shows the path of the Sentiel-2 satellite
+
+
+
+```js
+var filtered = s2.filterDate("2023-10-01", "2023-10-03");
+
+Map.addLayer(filtered);
+```
+
+- Printing to the console is still not possible.
+- How many images are in the collection?
+
+```js
+print(filtered.size())
+```
+
+- Zoom back to a region of interest, e.g. Visp
+- The image does not look good
+- Check the Docs for `ee.ImageCollection` and as before, it references `ee.data.getMapId()`. There, note the following line:
+
+  > bands (comma-separated strings) Comma-delimited list of band names to be mapped to RGB.
+- Read the Metadata of the dataset, check the Tab "Bands". Note the Band names and their description: RGB is "B4, B3, B2".
+
+```js
+Map.addLayer(filtered, {"bands":["B4","B3","B2"]});
+```
+
+- still not looking good. Using the map UI, use the layer setting to strech  the image to 98% and raise the gamma to about 4. You will learn more about these values in the Remote Sensing Course (FS24)
+- import these setting into the script via the **Import**-Button
+  - Note the `imageVisParam` object and how it is part of the code, but not quite. You can copy the code and create your own object from it, if you are so inclined.
+  - You can now replace the JavaScript object with the `imageVisParam` object
+
+```js
+// was created automagically:
+var imageVisParam = {"opacity":1,"bands":["B4","B3","B2"],"min":85.84,"max":4206.16,"gamma":3.055};
+
+// can be used in the addLayer-function:
+Map.addLayer(filtered, imageVisParam);
+```
+
+
+
+
+
+
