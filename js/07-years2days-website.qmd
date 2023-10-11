@@ -4,7 +4,7 @@
 
 Create structure:
 
-```
+```html
 <!DOCTYPE html>
 <html>
 
@@ -17,12 +17,12 @@ Create structure:
 
 Add header:
 
-```diff
+```{.html source-line-numbers="5"}
 <!DOCTYPE html>
 <html>
 
 <body>
-+    <h1>Years to Days calculator</h1>
+    <h1>Years to Days calculator</h1>
 </body>
 
 </html>
@@ -31,25 +31,7 @@ Add header:
 
 Add input and button:
 
-```diff
-<!DOCTYPE html>
-<html>
-
-<body>
-    <h1>Years to Days calculator</h1>
-
-+    Please enter your age in years:
-+    <input id="myage" type="number">
-+    <button>Calculate</button>
-</body>
-
-</html>
-```
-
-
-Add `<script>` with a dummy function, then call the function when clicking the button.
-
-```diff
+```{.html source-line-numbers="7-9"}
 <!DOCTYPE html>
 <html>
 
@@ -58,22 +40,16 @@ Add `<script>` with a dummy function, then call the function when clicking the b
 
     Please enter your age in years:
     <input id="myage" type="number">
-+    <button onclick="calculate();">Calculate!</button>
-
-+    <script>
-+        var i = 1;
-+        function calculate() {
-+            console.log(i++)
-+        }
-+    </script>
+    <button>Calculate</button>
 </body>
 
 </html>
 ```
 
-Replace the dummy function with the aged entered in the form.
 
-```diff
+Add `<script>` with a dummy function, then call the function when clicking the button.
+
+```{.html source-line-numbers="9-16"}
 <!DOCTYPE html>
 <html>
 
@@ -85,10 +61,9 @@ Replace the dummy function with the aged entered in the form.
     <button onclick="calculate();">Calculate!</button>
 
     <script>
-        var myage;
+        var i = 1;
         function calculate() {
-+            myage = document.getElementById("myage").value
-+            alert(myage)
+            console.log(i++)
         }
     </script>
 </body>
@@ -96,9 +71,9 @@ Replace the dummy function with the aged entered in the form.
 </html>
 ```
 
-Replace the alert with the calculation.
+Replace the dummy function with the aged entered in the form.
 
-```diff
+```{.html source-line-numbers="14-15"}
 <!DOCTYPE html>
 <html>
 
@@ -113,8 +88,33 @@ Replace the alert with the calculation.
         var myage;
         function calculate() {
             myage = document.getElementById("myage").value
-+            var myage_days = myage*365
-+            alert("You are "+myage_days+" days old")
+            alert(myage)
+        }
+    </script>
+</body>
+
+</html>
+```
+
+Replace the alert with the calculation.
+
+```{.html source-line-numbers="15-16"}
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Years to Days calculator</h1>
+
+    Please enter your age in years:
+    <input id="myage" type="number">
+    <button onclick="calculate();">Calculate!</button>
+
+    <script>
+        var myage;
+        function calculate() {
+            myage = document.getElementById("myage").value
+            var myage_days = myage*365
+            alert("You are "+myage_days+" days old")
         }
     </script>
 </body>

@@ -14,7 +14,7 @@
 - Explore the metadata of SRTM
 - Import via the *Collection Snippet*-button
   - Save in a variable and add `;`
-  - Execute with <kbd>Ctrl</kbd> <kbd>Alt</kbd> + <kbd>Enter</kbd>
+  - Execute with <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
 
 
 ```js

@@ -10,14 +10,7 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2_SR");
 
 // try printing, will abort (>5000 elements)
 print(sentinel);
-
 ```
-
-
-turn import statement into a formatted import statment and check docs.
-there is an example of filtering by date, use this example and adapt to the
-date range below
-
 
 var s2_filtered = s2.filterDate("2020-05-01", "2020-06-30")
 try adding to the map

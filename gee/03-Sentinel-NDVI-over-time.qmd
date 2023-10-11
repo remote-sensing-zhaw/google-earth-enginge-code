@@ -94,7 +94,7 @@ Compare the to objects, `s2` and `ndvi`. Much metadata was lost when we `map`ped
 :::{.callout-note collapse="true"}
 ## `s2` looks as follows:
 
-```diff
+```default
 features: List (218 elements)
   0:  Image COPERNICUS/S2_SR_HARMONIZED/20230101T102339_20230101T102333_T32TLS (23 bands)
     type: Image
@@ -115,7 +115,7 @@ features: List (218 elements)
 
 ## `ndvi` looks as follows:
 
-```
+```default
 features: List (218 elements)
   0: Image (1 band)
     type: Image
@@ -130,17 +130,16 @@ features: List (218 elements)
 
 Instead of generating a new image, we can simply add the output to the original image collection:
 
-```diff
-
+```{.default source-line-numbers="7-9"}
 function ndvi_fun(image){
   var nir = image.select("B8");
   var red = image.select("B4");
   var zaehler = nir.subtract(red);
   var nenner = nir.add(red);
   var ndvi = zaehler.divide(nenner);
-- return ndvi
-+ ndvi = ndvi.rename("ndvi")
-+ return image.addBands(ndvi)
+  return ndvi
+  ndvi = ndvi.rename("ndvi")
+  return image.addBands(ndvi)
 }
 ```
 
@@ -150,7 +149,7 @@ function ndvi_fun(image){
 - Note how the ndvi values change over time, but have irregularities?
 
 
-![](images/ee-chart.png)
+![](../images/ee-chart.png)
 
 
 ## Debugging the chart again
@@ -170,7 +169,7 @@ Map.addLayer(fil)
 
 This shows the issue: clouds!
 
-![](images/cloudy.png)
+![](../images/cloudy.png)
 
 - Check the metadata of the image. 
 - In the properties, there is a field `CLOUDY_PIXEL_PERCENTAGE`. 
