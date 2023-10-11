@@ -1,0 +1,25 @@
+# Task: Reverse-name
+
+```html
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Name reverser</h1>
+
+    Please enter your name:
+    <input id="myname" type="text">
+    <button onclick="reverse_it();">Calculate!</button>
+
+    <script>
+        var myage;
+        function reverse_it() {
+            myname = document.getElementById("myname").value
+            var myname_reverse = myname.split("").reverse().join("")
+            alert(myname_reverse)
+        }
+    </script>
+</body>
+
+</html>
+```
