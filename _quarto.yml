@@ -1,19 +1,34 @@
 project: 
   type: book
 
-# format:
-#   html:
-#     number-depth: 1
+format: 
+  html: 
+    number-depth: -1
+
+filters:
+  - line-highlight
 
 book:
   title: "Cloud Computing with Google Earth Engine"
   chapters: 
     - index.qmd
-    - 00-SRTM.qmd
-    - 01-Sentinel-RBG.qmd
-    - 02-Sentinel_NDVI.qmd
-    - 03-Sentinel-NDVI-over-time.qmd
-    - 04-Forest-Cover-Change.qmd
-    - 05-Classification-walkthrough.qmd
-    - 05-Classification-working-ex.qmd
+    - part: "JavaScript"
+      chapters:
+        - js/01-browser-console-demo.qmd
+        - js/02-basic-html-script-demo.qmd
+        - js/03-basic-html-script-task.qmd
+        - js/04-basic-html-script-demo.qmd
+        - js/05-function-years2days-task.qmd
+        - js/06-introduction-to-methods-demo.qmd
+        - js/07-years2days-website.qmd
+        - js/08-reverse-name-website.qmd
+    - part: "GEE"
+      chapters:
+        - gee/00-SRTM.qmd
+        - gee/01-Sentinel-RBG.qmd
+        - gee/02-Sentinel_NDVI.qmd
+        - gee/03-Sentinel-NDVI-over-time.qmd
+        - gee/04-Forest-Cover-Change.qmd
+        - gee/05-Classification-walkthrough.qmd
+        - gee/05-Classification-working-ex.qmd
 
