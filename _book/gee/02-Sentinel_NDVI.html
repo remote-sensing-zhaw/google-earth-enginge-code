@@ -75,6 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -263,15 +264,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup"><span class="header-section-number">11.1</span> Setup</a></li>
-  <li><a href="#specify-an-area-of-interest-aoi" id="toc-specify-an-area-of-interest-aoi" class="nav-link" data-scroll-target="#specify-an-area-of-interest-aoi"><span class="header-section-number">11.2</span> Specify an area of interest (<code>aoi</code>)</a></li>
-  <li><a href="#filter-by-the-aoi" id="toc-filter-by-the-aoi" class="nav-link" data-scroll-target="#filter-by-the-aoi"><span class="header-section-number">11.3</span> Filter by the <code>aoi</code></a></li>
-  <li><a href="#inspect-the-output" id="toc-inspect-the-output" class="nav-link" data-scroll-target="#inspect-the-output"><span class="header-section-number">11.4</span> Inspect the output</a></li>
-  <li><a href="#calculate-ndvi" id="toc-calculate-ndvi" class="nav-link" data-scroll-target="#calculate-ndvi"><span class="header-section-number">11.5</span> Calculate NDVI</a></li>
-  <li><a href="#visualize-the-output" id="toc-visualize-the-output" class="nav-link" data-scroll-target="#visualize-the-output"><span class="header-section-number">11.6</span> Visualize the output</a></li>
-  <li><a href="#adjust-range-and-palette" id="toc-adjust-range-and-palette" class="nav-link" data-scroll-target="#adjust-range-and-palette"><span class="header-section-number">11.7</span> Adjust range and palette</a></li>
-  <li><a href="#normalized-difference-function-skip-this-doesnt-work" id="toc-normalized-difference-function-skip-this-doesnt-work" class="nav-link" data-scroll-target="#normalized-difference-function-skip-this-doesnt-work"><span class="header-section-number">11.8</span> Normalized Difference Function (skip this, doesn’t work)</a></li>
-  <li><a href="#custom-ndvi-function" id="toc-custom-ndvi-function" class="nav-link" data-scroll-target="#custom-ndvi-function"><span class="header-section-number">11.9</span> Custom NDVI function</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#specify-an-area-of-interest-aoi" id="toc-specify-an-area-of-interest-aoi" class="nav-link" data-scroll-target="#specify-an-area-of-interest-aoi">Specify an area of interest (<code>aoi</code>)</a></li>
+  <li><a href="#filter-by-the-aoi" id="toc-filter-by-the-aoi" class="nav-link" data-scroll-target="#filter-by-the-aoi">Filter by the <code>aoi</code></a></li>
+  <li><a href="#inspect-the-output" id="toc-inspect-the-output" class="nav-link" data-scroll-target="#inspect-the-output">Inspect the output</a></li>
+  <li><a href="#calculate-ndvi" id="toc-calculate-ndvi" class="nav-link" data-scroll-target="#calculate-ndvi">Calculate NDVI</a></li>
+  <li><a href="#visualize-the-output" id="toc-visualize-the-output" class="nav-link" data-scroll-target="#visualize-the-output">Visualize the output</a></li>
+  <li><a href="#adjust-range-and-palette" id="toc-adjust-range-and-palette" class="nav-link" data-scroll-target="#adjust-range-and-palette">Adjust range and palette</a></li>
+  <li><a href="#normalized-difference-function-skip-this-doesnt-work" id="toc-normalized-difference-function-skip-this-doesnt-work" class="nav-link" data-scroll-target="#normalized-difference-function-skip-this-doesnt-work">Normalized Difference Function (skip this, doesn’t work)</a></li>
+  <li><a href="#custom-ndvi-function" id="toc-custom-ndvi-function" class="nav-link" data-scroll-target="#custom-ndvi-function">Custom NDVI function</a></li>
   </ul>
 </nav>
     </div>
@@ -302,13 +303,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>You have already seen this in the first lecture on the <a href="https://apps.sentinel-hub.com/eo-browser/">Sentinel Hub EO-Browser</a></li>
 <li>There, you weren’t able to do any calculations based on the data</li>
 </ul>
-<section id="setup" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">11.1</span> Setup</h2>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <ul>
 <li>We will work with the same data from Demo 2</li>
 <li>We can overwrite <code>s2</code> so we do not have too many variables</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> imageVisParam <span class="op">=</span> {<span class="st">"opacity"</span><span class="op">:</span><span class="dv">1</span><span class="op">,</span><span class="st">"bands"</span><span class="op">:</span>[<span class="st">"B4"</span><span class="op">,</span><span class="st">"B3"</span><span class="op">,</span><span class="st">"B2"</span>]<span class="op">,</span><span class="st">"min"</span><span class="op">:</span><span class="fl">85.84</span><span class="op">,</span><span class="st">"max"</span><span class="op">:</span><span class="fl">4206.16</span><span class="op">,</span><span class="st">"gamma"</span><span class="op">:</span><span class="fl">3.055</span>}</span>
+<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> imageVisParam <span class="op">=</span> {<span class="st">"opacity"</span><span class="op">:</span><span class="dv">1</span><span class="op">,</span><span class="st">"bands"</span><span class="op">:</span>[<span class="st">"B4"</span><span class="op">,</span><span class="st">"B3"</span><span class="op">,</span><span class="st">"B2"</span>]<span class="op">,</span><span class="st">"min"</span><span class="op">:</span><span class="fl">85.84</span><span class="op">,</span><span class="st">"max"</span><span class="op">:</span><span class="fl">4206.16</span><span class="op">,</span><span class="st">"gamma"</span><span class="op">:</span><span class="fl">3.055</span>}</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s2 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">"COPERNICUS/S2_SR_HARMONIZED"</span>)<span class="op">;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -316,8 +317,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(s2<span class="op">,</span> imageVisParam)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="specify-an-area-of-interest-aoi" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="specify-an-area-of-interest-aoi"><span class="header-section-number">11.2</span> Specify an area of interest (<code>aoi</code>)</h2>
+<section id="specify-an-area-of-interest-aoi" class="level2">
+<h2 class="anchored" data-anchor-id="specify-an-area-of-interest-aoi">Specify an area of interest (<code>aoi</code>)</h2>
 <ul>
 <li>As we saw in the last demo, we have several images in the collection.</li>
 <li>However, we are interested only in a single image, maybe an aggregate</li>
@@ -328,20 +329,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>If a mistake was made, either delete and redraw, or copy the code, delete the import statement and add it manually</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// this was created automagically</span></span>
+<div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// this was created automagically</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>([<span class="fl">7.880419288840592</span><span class="op">,</span> <span class="fl">46.29770703906289</span>])<span class="op">;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// and can be added to the Map like so:</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(aoi)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="filter-by-the-aoi" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="filter-by-the-aoi"><span class="header-section-number">11.3</span> Filter by the <code>aoi</code></h2>
+<section id="filter-by-the-aoi" class="level2">
+<h2 class="anchored" data-anchor-id="filter-by-the-aoi">Filter by the <code>aoi</code></h2>
 <ul>
 <li>using the search function in Docs, look for various filter functions</li>
 <li>We will need the function <code>filerBounds()</code></li>
 <li>Apply the filter, but out of intereste check the size of the collection before and after filtering</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// the original filter coincidently shows just one image </span></span>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// the original filter coincidently shows just one image </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// for the filtered Date and AOI. Try changing the dates </span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">// so that multiple images </span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -356,37 +357,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(s2<span class="op">.</span><span class="fu">size</span>())</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(s2)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="inspect-the-output" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="inspect-the-output"><span class="header-section-number">11.4</span> Inspect the output</h2>
+<section id="inspect-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-the-output">Inspect the output</h2>
 <ul>
 <li>Check the output of <code>console.log(s2)</code>.</li>
 <li>We wanted a single image, but still have an image collection with multiple values.</li>
 <li>We might want to choose <em>the best</em> image (we will do so later on)</li>
 <li>but for now let’s keep it simple and just take the first with the <code>first()</code> method</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> s2<span class="op">.</span><span class="fu">first</span>()</span>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> s2<span class="op">.</span><span class="fu">first</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(s2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="calculate-ndvi" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="calculate-ndvi"><span class="header-section-number">11.5</span> Calculate NDVI</h2>
+<section id="calculate-ndvi" class="level2">
+<h2 class="anchored" data-anchor-id="calculate-ndvi">Calculate NDVI</h2>
 <ul>
 <li>Now, we can use the image to calculate <a href="https://de.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index">NDVI</a></li>
 </ul>
 <p><span class="math display">\[ \text{NDVI} = \frac{\text{NIR}- \text{Red}}{\text{NIR}+\text{Red}} \]</span></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> nir <span class="op">=</span> s2<span class="op">.</span><span class="fu">select</span>(<span class="st">"B8"</span>)</span>
+<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> nir <span class="op">=</span> s2<span class="op">.</span><span class="fu">select</span>(<span class="st">"B8"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> red <span class="op">=</span> s2<span class="op">.</span><span class="fu">select</span>(<span class="st">"B4"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> zaehler <span class="op">=</span> nir<span class="op">.</span><span class="fu">subtract</span>(red)<span class="op">;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> nenner <span class="op">=</span> nir<span class="op">.</span><span class="fu">add</span>(red)<span class="op">;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> ndvi <span class="op">=</span> zaehler<span class="op">.</span><span class="fu">divide</span>(nenner)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="visualize-the-output" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="visualize-the-output"><span class="header-section-number">11.6</span> Visualize the output</h2>
+<section id="visualize-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-the-output">Visualize the output</h2>
 <p>Add the output to the map:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(ndvi)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(ndvi)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="adjust-range-and-palette" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="adjust-range-and-palette"><span class="header-section-number">11.7</span> Adjust range and palette</h2>
+<section id="adjust-range-and-palette" class="level2">
+<h2 class="anchored" data-anchor-id="adjust-range-and-palette">Adjust range and palette</h2>
 <ul>
 <li>Via the GUI
 <ul>
@@ -395,26 +396,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li>Import the visParams from the GUI to the code editor</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>imageVisParam2 <span class="op">=</span> {<span class="st">"opacity"</span><span class="op">:</span><span class="dv">1</span><span class="op">,</span><span class="st">"bands"</span><span class="op">:</span>[<span class="st">"B8"</span>]<span class="op">,</span><span class="st">"min"</span><span class="op">:-</span><span class="dv">1</span><span class="op">,</span><span class="st">"palette"</span><span class="op">:</span>[<span class="st">"ff0000"</span><span class="op">,</span><span class="st">"ffff00"</span><span class="op">,</span><span class="st">"008000"</span>]}<span class="op">;</span></span>
+<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>imageVisParam2 <span class="op">=</span> {<span class="st">"opacity"</span><span class="op">:</span><span class="dv">1</span><span class="op">,</span><span class="st">"bands"</span><span class="op">:</span>[<span class="st">"B8"</span>]<span class="op">,</span><span class="st">"min"</span><span class="op">:-</span><span class="dv">1</span><span class="op">,</span><span class="st">"palette"</span><span class="op">:</span>[<span class="st">"ff0000"</span><span class="op">,</span><span class="st">"ffff00"</span><span class="op">,</span><span class="st">"008000"</span>]}<span class="op">;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(ndvi<span class="op">,</span> imageVisParam2)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="normalized-difference-function-skip-this-doesnt-work" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="normalized-difference-function-skip-this-doesnt-work"><span class="header-section-number">11.8</span> Normalized Difference Function (skip this, doesn’t work)</h2>
+<section id="normalized-difference-function-skip-this-doesnt-work" class="level2">
+<h2 class="anchored" data-anchor-id="normalized-difference-function-skip-this-doesnt-work">Normalized Difference Function (skip this, doesn’t work)</h2>
 <ul>
 <li>Alternatively, you can use the <em>Normalized Difference</em> function</li>
 <li>The function “normalizedDifference” is a generic function to calculcate normalized difference between two bands</li>
 <li>This doesn’t seem to work?</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> ndvi <span class="op">=</span> s2<span class="op">.</span><span class="fu">normalizedDifference</span>([<span class="st">"B8"</span><span class="op">,</span> <span class="st">"B4"</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> ndvi <span class="op">=</span> s2<span class="op">.</span><span class="fu">normalizedDifference</span>([<span class="st">"B8"</span><span class="op">,</span> <span class="st">"B4"</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="custom-ndvi-function" class="level2" data-number="11.9">
-<h2 data-number="11.9" class="anchored" data-anchor-id="custom-ndvi-function"><span class="header-section-number">11.9</span> Custom NDVI function</h2>
+<section id="custom-ndvi-function" class="level2">
+<h2 class="anchored" data-anchor-id="custom-ndvi-function">Custom NDVI function</h2>
 <ul>
 <li>We could also create a custom <code>ndvi()</code>-function that takes the bands 8 and 4</li>
 <li>We can only apply this function to the Sentinel-2 data, where the Band numbers 8 and 4 correspond to NIR and Red.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ndvi_fun</span>(image){</span>
+<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ndvi_fun</span>(image){</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> nir <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">"B8"</span>)<span class="op">;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> red <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">"B4"</span>)<span class="op">;</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> zaehler <span class="op">=</span> nir<span class="op">.</span><span class="fu">subtract</span>(red)<span class="op">;</span></span>
@@ -680,4 +681,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

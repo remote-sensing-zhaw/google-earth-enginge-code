@@ -267,6 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#create-a-map" id="toc-create-a-map" class="nav-link" data-scroll-target="#create-a-map">Create a map</a></li>
   <li><a href="#consult-docs-to-change-the-viz-params" id="toc-consult-docs-to-change-the-viz-params" class="nav-link" data-scroll-target="#consult-docs-to-change-the-viz-params">Consult docs to change the viz params</a></li>
   <li><a href="#add-a-color-palette" id="toc-add-a-color-palette" class="nav-link" data-scroll-target="#add-a-color-palette">Add a color palette</a></li>
+  <li><a href="#add-slope" id="toc-add-slope" class="nav-link" data-scroll-target="#add-slope">Add slope</a></li>
   </ul>
 </nav>
     </div>
@@ -355,6 +356,14 @@ The visualization parameters as a (client-side) JavaScript object. …
 <h2 class="anchored" data-anchor-id="add-a-color-palette">Add a color palette</h2>
 <p>Add a color palette, and maybe to the whole thing in one line:</p>
 <div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(srtm<span class="op">,</span> {<span class="dt">min</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">max</span><span class="op">:</span> <span class="dv">4000</span><span class="op">,</span> <span class="dt">palette</span><span class="op">:</span> [<span class="st">"green"</span><span class="op">,</span> <span class="st">"red"</span><span class="op">,</span> <span class="st">"blue"</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="add-slope" class="level2">
+<h2 class="anchored" data-anchor-id="add-slope">Add slope</h2>
+<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> slope <span class="op">=</span> ee<span class="op">.</span><span class="at">Terrain</span><span class="op">.</span><span class="fu">slope</span>(srtm)<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> slopevis <span class="op">=</span> {<span class="dt">min</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">max</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">palette</span><span class="op">:</span> [<span class="st">'green'</span><span class="op">,</span><span class="st">'yellow'</span><span class="op">,</span><span class="st">'red'</span>]}<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(srtm<span class="op">,</span> {<span class="dt">min</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">max</span><span class="op">:</span> <span class="dv">3000</span>}<span class="op">,</span> <span class="st">'DEM'</span>)<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(slope<span class="op">,</span> slopevis<span class="op">,</span> <span class="st">'slope'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
