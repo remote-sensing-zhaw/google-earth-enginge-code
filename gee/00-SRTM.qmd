@@ -77,3 +77,14 @@ Add a color palette, and maybe to the whole thing in one line:
 ```js
 Map.addLayer(srtm, {min: 0, max: 4000, palette: ["green", "red", "blue"]})
 ```
+
+
+## Add slope
+
+```js
+var slope = ee.Terrain.slope(srtm);
+var slopevis = {min: 0, max: 30, palette: ['green','yellow','red']};
+
+Map.addLayer(srtm, {min: 0, max: 3000}, 'DEM');
+Map.addLayer(slope, slopevis, 'slope');
+```

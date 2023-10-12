@@ -29,6 +29,6 @@ book:
         - gee/02-Sentinel_NDVI.qmd
         - gee/03-Sentinel-NDVI-over-time.qmd
         - gee/04-Forest-Cover-Change.qmd
-        - gee/05-Classification-walkthrough.qmd
-        - gee/05-Classification-working-ex.qmd
+        # - gee/05-Classification-walkthrough.qmd
+        # - gee/05-Classification-working-ex.qmd
 
