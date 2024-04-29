@@ -114,17 +114,6 @@ Map.addLayer(ndvi, imageVisParam2);
 
 ```
 
-## Normalized Difference Function (skip this, doesn't work)
-
-- Alternatively, you can use the *Normalized Difference* function
-- The function "normalizedDifference" is a generic function to calculcate normalized difference between two bands
-- This doesn't seem to work?
-
-```js
-var ndvi = s2.normalizedDifference(["B8", "B4"]);
-```
-
-
 ## Custom NDVI function
 
 - We could also create a custom `ndvi()`-function that takes the bands 8 and 4

@@ -18,12 +18,15 @@ These are my notes to walk students of various courses through the initial steps
 
 I live code everything during the lesson. These scripts should be shared with the students *during the class*, so that they can copy my code when they are lost. Here are the links to the old repos (`GEE Link`: click on this to open the repo in GEE. `Git Link`: Use this to git clone locally)
 
-- FS22 / FS23:
+- FS22 / FS23 (UI / ADLS DataLab):
   - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/zhaw-remote-sensing)
   - [Git Link](https://earthengine.googlesource.com/users/rata/zhaw-remote-sensing)
-- FS24: 
+- FS24 (UI): 
   - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/remsen_UI_FS24)
   - [Git Link](https://earthengine.googlesource.com/users/rata/remsen_UI_FS24)
+- FS24 (ADLS Remsen): 
+  - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/remsen_ADLS_FS24)
+  - [Git Link](https://earthengine.googlesource.com/users/rata/remsen_ADLS_FS24)
 
 
 ## General
