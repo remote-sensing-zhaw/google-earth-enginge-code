@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visualize-the-output" id="toc-visualize-the-output" class="nav-link" data-scroll-target="#visualize-the-output">Visualize the output</a></li>
   <li><a href="#debugging-the-chart" id="toc-debugging-the-chart" class="nav-link" data-scroll-target="#debugging-the-chart">Debugging the chart</a></li>
   <li><a href="#compare-the-two-objects" id="toc-compare-the-two-objects" class="nav-link" data-scroll-target="#compare-the-two-objects">Compare the two objects</a></li>
-  <li><a href="#add-output-as-new-image" id="toc-add-output-as-new-image" class="nav-link" data-scroll-target="#add-output-as-new-image">Add output as new image</a></li>
+  <li><a href="#copy-the-necessary-properties" id="toc-copy-the-necessary-properties" class="nav-link" data-scroll-target="#copy-the-necessary-properties">Copy the necessary properties</a></li>
   <li><a href="#run-analysis-on-the-entire-year" id="toc-run-analysis-on-the-entire-year" class="nav-link" data-scroll-target="#run-analysis-on-the-entire-year">Run analysis on the entire year</a></li>
   <li><a href="#debugging-the-chart-again" id="toc-debugging-the-chart-again" class="nav-link" data-scroll-target="#debugging-the-chart-again">Debugging the chart again</a></li>
   <li><a href="#filtering-by-cloud-cover" id="toc-filtering-by-cloud-cover" class="nav-link" data-scroll-target="#filtering-by-cloud-cover">Filtering by cloud cover</a></li>
@@ -432,22 +432,20 @@ Error
 </div>
 </div>
 </section>
-<section id="add-output-as-new-image" class="level2">
-<h2 class="anchored" data-anchor-id="add-output-as-new-image">Add output as new image</h2>
+<section id="copy-the-necessary-properties" class="level2">
+<h2 class="anchored" data-anchor-id="copy-the-necessary-properties">Copy the necessary properties</h2>
 <p>Instead of generating a new image, we can simply add the output to the original image collection:</p>
-<div class="sourceCode" id="cb7" data-source-line-numbers="7-10" data-code-line-numbers="7-10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>function ndvi_fun(image){</span>
+<div class="sourceCode" id="cb7" data-source-line-numbers="7" data-code-line-numbers="7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>function ndvi_fun(image){</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  var nir = image.select("B8");</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  var red = image.select("B4");</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  var zaehler = nir.subtract(red);</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  var nenner = nir.add(red);</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  var ndvi = zaehler.divide(nenner);</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  return ndvi</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ndvi = ndvi.rename("ndvi")</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  image = image.addBands(ndvi)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  return image</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ndvi = ndvi.copyProperties(image, ["system:time_start"])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  return ndvi</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Also, adapt the Chart-printing:</p>
-<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ui<span class="op">.</span><span class="at">Chart</span><span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">series</span>(ndvi<span class="op">.</span><span class="fu">select</span>(<span class="st">'ndvi'</span>)<span class="op">,</span> aoi))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ui<span class="op">.</span><span class="at">Chart</span><span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">series</span>(ndvi<span class="op">,</span> aoi))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="run-analysis-on-the-entire-year" class="level2">
 <h2 class="anchored" data-anchor-id="run-analysis-on-the-entire-year">Run analysis on the entire year</h2>

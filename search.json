@@ -4,17 +4,37 @@
     "href": "index.html",
     "title": "Cloud Computing with Google Earth Engine",
     "section": "",
-    "text": "Introduction\nThese notes are intended to accompany the the Digital Life Sience Data Lab course. Nils will work with you through these examples in a workshop format. This means he will live code and you will accompany him. We specifically do not want to give you these codes up front, since writing your own code and making mistakes is the best way to learn.\nThis also means that the code you write is part of your learning experience and you should keep it for your own reference. To set this up, proceed as follows:\nInstructions for Nils:",
+    "text": "Introduction\nThese are my notes to walk students of various courses through the initial steps of dealing with GoogleEarthEnginge. This repo is not shared, but rather the result of the live coding is. To do this:",
     "crumbs": [
       "Introduction"
     ]
   },
   {
-    "objectID": "index.html#preperation",
-    "href": "index.html#preperation",
+    "objectID": "index.html#git-repos-of-previous-years",
+    "href": "index.html#git-repos-of-previous-years",
     "title": "Cloud Computing with Google Earth Engine",
-    "section": "Preperation",
-    "text": "Preperation\nPlease make sure you have registered for a GoogleEarthEngine Account. See the slides here for instructions.",
+    "section": "Git Repos of previous years",
+    "text": "Git Repos of previous years\nI live code everything during the lesson. These scripts should be shared with the students during the class, so that they can copy my code when they are lost. Here are the links to the old repos (GEE Link: click on this to open the repo in GEE. Git Link: Use this to git clone locally)\n\nFS22 / FS23 (UI / ADLS DataLab):\n\nGEE Link\nGit Link\n\nFS24 (UI):\n\nGEE Link\nGit Link\n\nFS24 (ADLS Remsen):\n\nGEE Link\nGit Link",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#general",
+    "href": "index.html#general",
+    "title": "Cloud Computing with Google Earth Engine",
+    "section": "General",
+    "text": "General\n\nStance Maples has an awesome introduction to GEE on youtube.\nDidactics:\n\nWhen walking through the code, try to involve the students in the thought processes that it might take to come up with the correct solution.\nThe classification example is outdated, especially since the training data needs to be uploaded. There is usually not enough time to do this anyway. a standalone script that I presented in different lecture",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#gee-functions-reference",
+    "href": "index.html#gee-functions-reference",
+    "title": "Cloud Computing with Google Earth Engine",
+    "section": "GEE Functions reference",
+    "text": "GEE Functions reference\n\nGet the current time using the JavaScript Date.now() method.\nvar now = Date.now();\nprint('Milliseconds since January 1, 1970', now);\nGet the system:time_start property of an image and print it as a date:\nvar time_start = gfcc.first().get(\"system:time_start\")\nprint(ee.Date(time_start))\nGet the first and last date of an imageCollection:\nvar first_date = ee.Date(gfcc.first().get(\"system:time_start\"))\nvar last_date = ee.Date(gfcc.sort(\"system:time_start\", false).first().get(\"system:time_start\"))\n\nprint(\"from\", first_date, \"to\", last_date)\nMap an anonymus function over an ImageCollection:\nmyImageCollection.map(function(image) {\n  return image.multiply(2);\n});",
     "crumbs": [
       "Introduction"
     ]
@@ -233,7 +253,7 @@
     "href": "gee/02-Sentinel_NDVI.html#filter-by-the-aoi",
     "title": "11  Demo 3: Multispec NDVI",
     "section": "Filter by the aoi",
-    "text": "Filter by the aoi\n\nusing the search function in Docs, look for various filter functions\nWe will need the function filerBounds()\nApply the filter, but out of intereste check the size of the collection before and after filtering\n\n// the original filter coincidently shows just one image \n// for the filtered Date and AOI. Try changing the dates \n// so that multiple images \n\n//var s2 = s2.filterDate(\"2023-10-01\", \"2023-10-03\");\nvar s2 = s2.filterDate(\"2023-09-01\", \"2023-10-03\");\n\n\nconsole.log(s2.size())\n\ns2 = s2.filterBounds(aoi);\n\nconsole.log(s2.size())\nconsole.log(s2);",
+    "text": "Filter by the aoi\n\nusing the search function in Docs, look for various filter functions\nWe will need the function filterBounds()\nApply the filter, but out of intereste check the size of the collection before and after filtering\n\n// the original filter coincidently shows just one image \n// for the filtered Date and AOI. Try changing the dates \n// so that multiple images \n\n//var s2 = s2.filterDate(\"2023-10-01\", \"2023-10-03\");\nvar s2 = s2.filterDate(\"2023-09-01\", \"2023-10-03\");\n\n\nconsole.log(s2.size())\n\ns2 = s2.filterBounds(aoi);\n\nconsole.log(s2.size())\nconsole.log(s2);",
     "crumbs": [
       "GEE",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Demo 3: Multispec NDVI</span>"
@@ -278,17 +298,6 @@
     "title": "11  Demo 3: Multispec NDVI",
     "section": "Adjust range and palette",
     "text": "Adjust range and palette\n\nVia the GUI\n\nAdjust the value range to -1 - 1\nAdd a palettte by adding the colors red, yellow and green. These will automatically be mapped to the specified value rage.\n\nImport the visParams from the GUI to the code editor\n\nimageVisParam2 = {\"opacity\":1,\"bands\":[\"B8\"],\"min\":-1,\"palette\":[\"ff0000\",\"ffff00\",\"008000\"]};\n\nMap.addLayer(ndvi, imageVisParam2);",
-    "crumbs": [
-      "GEE",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Demo 3: Multispec NDVI</span>"
-    ]
-  },
-  {
-    "objectID": "gee/02-Sentinel_NDVI.html#normalized-difference-function-skip-this-doesnt-work",
-    "href": "gee/02-Sentinel_NDVI.html#normalized-difference-function-skip-this-doesnt-work",
-    "title": "11  Demo 3: Multispec NDVI",
-    "section": "Normalized Difference Function (skip this, doesn’t work)",
-    "text": "Normalized Difference Function (skip this, doesn’t work)\n\nAlternatively, you can use the Normalized Difference function\nThe function “normalizedDifference” is a generic function to calculcate normalized difference between two bands\nThis doesn’t seem to work?\n\nvar ndvi = s2.normalizedDifference([\"B8\", \"B4\"]);",
     "crumbs": [
       "GEE",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Demo 3: Multispec NDVI</span>"
@@ -383,11 +392,11 @@
     ]
   },
   {
-    "objectID": "gee/03-Sentinel-NDVI-over-time.html#add-output-as-new-image",
-    "href": "gee/03-Sentinel-NDVI-over-time.html#add-output-as-new-image",
+    "objectID": "gee/03-Sentinel-NDVI-over-time.html#copy-the-necessary-properties",
+    "href": "gee/03-Sentinel-NDVI-over-time.html#copy-the-necessary-properties",
     "title": "12  Demo 4: NDVI over time",
-    "section": "Add output as new image",
-    "text": "Add output as new image\nInstead of generating a new image, we can simply add the output to the original image collection:\nfunction ndvi_fun(image){\n  var nir = image.select(\"B8\");\n  var red = image.select(\"B4\");\n  var zaehler = nir.subtract(red);\n  var nenner = nir.add(red);\n  var ndvi = zaehler.divide(nenner);\n  return ndvi\n  ndvi = ndvi.rename(\"ndvi\")\n  image = image.addBands(ndvi)\n  return image\n}\nAlso, adapt the Chart-printing:\nprint(ui.Chart.image.series(ndvi.select('ndvi'), aoi));",
+    "section": "Copy the necessary properties",
+    "text": "Copy the necessary properties\nInstead of generating a new image, we can simply add the output to the original image collection:\nfunction ndvi_fun(image){\n  var nir = image.select(\"B8\");\n  var red = image.select(\"B4\");\n  var zaehler = nir.subtract(red);\n  var nenner = nir.add(red);\n  var ndvi = zaehler.divide(nenner);\n  ndvi = ndvi.copyProperties(image, [\"system:time_start\"])\n  return ndvi\n}\nAlso, adapt the Chart-printing:\nprint(ui.Chart.image.series(ndvi, aoi));",
     "crumbs": [
       "GEE",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Demo 4: NDVI over time</span>"
