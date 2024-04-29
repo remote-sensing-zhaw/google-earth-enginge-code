@@ -126,27 +126,25 @@ features: List (218 elements)
 ```
 :::
 
-## Add output as new image
+## Copy the necessary properties
 
 Instead of generating a new image, we can simply add the output to the original image collection:
 
-```{.default source-line-numbers="7-10"}
+```{.default source-line-numbers="7"}
 function ndvi_fun(image){
   var nir = image.select("B8");
   var red = image.select("B4");
   var zaehler = nir.subtract(red);
   var nenner = nir.add(red);
   var ndvi = zaehler.divide(nenner);
+  ndvi = ndvi.copyProperties(image, ["system:time_start"])
   return ndvi
-  ndvi = ndvi.rename("ndvi")
-  image = image.addBands(ndvi)
-  return image
 }
 ```
 Also, adapt the Chart-printing:
 
 ```{.js}
-print(ui.Chart.image.series(ndvi.select('ndvi'), aoi));
+print(ui.Chart.image.series(ndvi, aoi));
 ```
 
 

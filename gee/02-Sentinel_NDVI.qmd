@@ -44,7 +44,7 @@ Map.addLayer(aoi);
 ## Filter by the `aoi`
 
 - using the search function in Docs, look for various filter functions
-- We will need the function `filerBounds()`
+- We will need the function `filterBounds()`
 - Apply the filter, but out of intereste check the size of the collection before and after filtering
 
 ```js

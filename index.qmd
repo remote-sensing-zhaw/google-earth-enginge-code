@@ -2,26 +2,69 @@
 
 # Introduction {.unnumbered}
 
-These notes are intended to accompany the the Digital Life Sience Data Lab course. Nils will work with you through these examples in a workshop format. This means he will live code and you will accompany him. We specifically do *not* want to give you these codes up front, since writing your own code and making mistakes is the best way to learn.
-
-This also means that the code you write is part of your learning experience and you should keep it for your own reference. To set this up, proceed as follows:
+These are my notes to walk students of various courses through the initial steps of dealing with GoogleEarthEnginge. This repo is not shared, but rather the result of the live coding is. To do this:
 
 1. Select *New* → *Repo* → Give the repo a meaningful name
 2. Select *New* → *File* → 
    1. Choose the repo from step 1 
    2. Give the file a meaningful name (Demo Number + Topic) 
    3. Optionally add a commit message
-3. Configure Repo by clicking on the configure Button. You can use the git URL to clone the repo to your local machine (and sync with GitHub if you are inclined to do so).
+3. Get the Repo's URL by clicking on the *configure* button
+3. Add the URL of the Repo on Moodle *beforehand*
 
 
-**Instructions for Nils:**
-
-1. Do the steps above
-2. Make your own repo available to everyone
-3. Share the URL to your repo
-
-## Preperation
-
-Please make sure you have registered for a GoogleEarthEngine Account. See the slides [here](https://github.zhaw.ch/pages/ADLS-Digital-Environment/Life-Sciences-Datalab-Praktika-Remote-Sending/register-gee.html) for instructions.
 
 
+
+## Git Repos of previous years
+
+I live code everything during the lesson. These scripts should be shared with the students *during the class*, so that they can copy my code when they are lost. Here are the links to the old repos (`GEE Link`: click on this to open the repo in GEE. `Git Link`: Use this to git clone locally)
+
+- FS24: 
+  - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/remsen_UI_FS24)
+  - [Git Link](https://earthengine.googlesource.com/users/rata/remsen_UI_FS24)
+
+
+## General
+
+- Stance Maples has an awesome introduction to GEE on [youtube](https://youtu.be/oAElakLgCdA).
+- Didactics: 
+  - When walking through the code, try to involve the students in the thought processes that it might take to come up with the correct solution.
+  - The classification example is ~~outdated, especially since the training data needs to be uploaded. There is usually not enough time to do this anyway.~~ a standalone script that I presented in different lecture
+
+
+## GEE Functions reference
+
+
+- Get the current time using the JavaScript Date.now() method.
+  
+  ```js
+  var now = Date.now();
+  print('Milliseconds since January 1, 1970', now);
+  ```
+
+- Get the `system:time_start` property of an image and print it as a date:
+
+  ```js
+  var time_start = gfcc.first().get("system:time_start")
+  print(ee.Date(time_start))
+  ```
+
+- Get the first and last date of an imageCollection:
+
+  ```js
+  var first_date = ee.Date(gfcc.first().get("system:time_start"))
+  var last_date = ee.Date(gfcc.sort("system:time_start", false).first().get("system:time_start"))
+
+  print("from", first_date, "to", last_date)
+  ```
+
+
+- Map an anonymus function over an ImageCollection:
+
+  ```js
+  myImageCollection.map(function(image) {
+    return image.multiply(2);
+  });
+  ```
+  
