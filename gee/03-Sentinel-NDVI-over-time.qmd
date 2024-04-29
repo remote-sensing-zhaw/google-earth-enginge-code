@@ -130,7 +130,7 @@ features: List (218 elements)
 
 Instead of generating a new image, we can simply add the output to the original image collection:
 
-```{.default source-line-numbers="7-9"}
+```{.default source-line-numbers="7-10"}
 function ndvi_fun(image){
   var nir = image.select("B8");
   var red = image.select("B4");
@@ -139,9 +139,16 @@ function ndvi_fun(image){
   var ndvi = zaehler.divide(nenner);
   return ndvi
   ndvi = ndvi.rename("ndvi")
-  return image.addBands(ndvi)
+  image = image.addBands(ndvi)
+  return image
 }
 ```
+Also, adapt the Chart-printing:
+
+```{.js}
+print(ui.Chart.image.series(ndvi.select('ndvi'), aoi));
+```
+
 
 ## Run analysis on the entire year
 
@@ -149,7 +156,7 @@ function ndvi_fun(image){
 - Note how the ndvi values change over time, but have irregularities?
 
 
-![](../images/ee-chart.png)
+![](../images/ee-chart.png)9
 
 
 ## Debugging the chart again
