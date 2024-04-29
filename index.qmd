@@ -2,6 +2,7 @@
 
 # Introduction {.unnumbered}
 
+
 These are my notes to walk students of various courses through the initial steps of dealing with GoogleEarthEnginge. This repo is not shared, but rather the result of the live coding is. To do this:
 
 1. Select *New* → *Repo* → Give the repo a meaningful name
@@ -13,13 +14,13 @@ These are my notes to walk students of various courses through the initial steps
 3. Add the URL of the Repo on Moodle *beforehand*
 
 
-
-
-
 ## Git Repos of previous years
 
 I live code everything during the lesson. These scripts should be shared with the students *during the class*, so that they can copy my code when they are lost. Here are the links to the old repos (`GEE Link`: click on this to open the repo in GEE. `Git Link`: Use this to git clone locally)
 
+- FS22 / FS23:
+  - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/zhaw-remote-sensing)
+  - [Git Link](https://earthengine.googlesource.com/users/rata/zhaw-remote-sensing)
 - FS24: 
   - [GEE Link](https://code.earthengine.google.com/?accept_repo=users/rata/remsen_UI_FS24)
   - [Git Link](https://earthengine.googlesource.com/users/rata/remsen_UI_FS24)
